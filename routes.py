@@ -5,6 +5,8 @@ from sqlalchemy.sql import text
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
 
+from werkzeug.security import check_password_hash, generate_password_hash
+
 app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
 app.secret_key = getenv("SECRET_KEY")
 db = SQLAlchemy(app)
@@ -21,8 +23,19 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        #check
-        session["username"] = username
+        sql = "SELECT user_id, password FROM users WHERE username=:username"
+        result = db.session.execute(text(sql), {'username':username})
+        user = result.fetchone()
+        if not user:
+            #To do invalid username
+            pass
+        else:
+            hash_value = user.password
+            if check_password_hash(hash_value, password):
+                session["username"] = username
+            else:
+                #to do invalid password
+                pass
         return redirect("/login")
 
 @app.route("/logout")
@@ -40,8 +53,9 @@ def createAccaunt():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         if password1 == password2:
-            sql = f"INSERT INTO users (username, password) VALUES ('{username}', '{password1}');"
-            db.session.execute(text(sql))
+            hash_value = generate_password_hash(password1)
+            sql = f"INSERT INTO users (username, password) VALUES (:username, :password);"
+            db.session.execute(text(sql), {'username':username, 'password':hash_value})
             db.session.commit()
         return redirect("/")
     
