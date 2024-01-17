@@ -17,16 +17,16 @@ def index():
 def login():
     return render_template("login.html")
 
-@app.route("/newuser", methods=["GET", "POST"])
+@app.route("/newuser", methods=["POST"])
 def createAccaunt():
     return render_template("newuser.html")
 
-@app.route("/newUserHandler", methods=["POST"])
+@app.route("/newUserHandler", methods=["GET", "POST"])
 def newUserHandler():
     username = request.form["username"]
     password = request.form["password"]
-    sql = f"INSERT INTO users (username, password, privelages) VALUES ('{username}', '{password}', 'user');"
-    result = db.session.execute(text(sql))
+    sql = f"INSERT INTO users (username, password) VALUES ('{username}', '{password}');"
+    db.session.execute(text(sql))
     db.session.commit()
     return redirect("/")
 
