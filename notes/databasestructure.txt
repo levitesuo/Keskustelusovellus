@@ -1,29 +1,34 @@
 users
-    id
+    user_id
     username  
     password
 
 admins
-    id
+    admin_id
     username
     password
 
+pracces
+    slip id
+    user_id
+    private_key
+
 topics
-    id
+    topic_id
     name
-    post id:s
-    who get in?
+    private_key
 
 posts
-    id
+    post_id
+    topic_id
     timestamp
-    comment id:s
     header
     text
-    owner
+    owner id
 
 comments
-    id
+    comment_id
+    post_id
     timestamp
     text
     owner

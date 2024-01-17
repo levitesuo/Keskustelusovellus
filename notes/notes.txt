@@ -1,0 +1,6 @@
+Tietokannan käynnistys
+    start-pg.sh
+    pgql
+
+To create tables use
+    psql < tables.sql
