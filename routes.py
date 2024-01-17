@@ -16,6 +16,10 @@ db = SQLAlchemy(app)
 def index():
     return render_template("index.html")
 
+@app.route("/error")
+def testerror():
+    return render_template("error.html", message = "Testivirhe")
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
