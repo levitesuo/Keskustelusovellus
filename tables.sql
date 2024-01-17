@@ -1,6 +1,6 @@
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY, 
-    username TEXT NOT NULL, 
+    username TEXT NOT NULL UNIQUE, 
     password TEXT NOT NULL
 );
 
@@ -20,7 +20,7 @@ CREATE TABLE topics (
 CREATE TABLE privrooms (
     slip_id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    private_key INT NOT NULL REFERENCES topics(private_key),
+    private_key INT NOT NULL,
     FOREIGN KEY(user_id)
         REFERENCES users (user_id)
 );

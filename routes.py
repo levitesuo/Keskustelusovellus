@@ -1,15 +1,10 @@
 from app import app
 from flask import redirect, render_template, request, session
 from sqlalchemy.sql import text
-
-from flask_sqlalchemy import SQLAlchemy
-from os import getenv
-
 from werkzeug.security import check_password_hash, generate_password_hash
+from db import db
+from users import login_handler, newuser_handler
 
-app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
-app.secret_key = getenv("SECRET_KEY")
-db = SQLAlchemy(app)
 
 
 @app.route("/")
@@ -27,19 +22,8 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        sql = "SELECT user_id, password FROM users WHERE username=:username"
-        result = db.session.execute(text(sql), {'username':username})
-        user = result.fetchone()
-        if not user:
-            #To do invalid username
-            pass
-        else:
-            hash_value = user.password
-            if check_password_hash(hash_value, password):
-                session["username"] = username
-            else:
-                #to do invalid password
-                pass
+        if login_handler(username, password):
+            session["username"] = username
         return redirect("/login")
 
 @app.route("/logout")
@@ -56,12 +40,12 @@ def createAccaunt():
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
-        if password1 == password2:
-            hash_value = generate_password_hash(password1)
-            sql = f"INSERT INTO users (username, password) VALUES (:username, :password);"
-            db.session.execute(text(sql), {'username':username, 'password':hash_value})
-            db.session.commit()
-        return redirect("/")
+        if password1 != password2:
+            return render_template("error.html", message="Salasanat eroavat", returnUrl="/newuser")
+        if newuser_handler(username, password1):
+            return redirect("/")
+        else:
+            return render_template("error.html", message="Käyttäjänimi varattu.", returnUrl="/newuser")
     
 
 @app.route("/users")
