@@ -1,0 +1,3 @@
+Tietokannan käynnistys
+    start-pg.sh
+    pgql
