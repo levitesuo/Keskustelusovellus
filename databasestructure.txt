@@ -1,0 +1,29 @@
+users
+    id
+    username  
+    password
+
+admins
+    id
+    username
+    password
+
+topics
+    id
+    name
+    post id:s
+    who get in?
+
+posts
+    id
+    timestamp
+    comment id:s
+    header
+    text
+    owner
+
+comments
+    id
+    timestamp
+    text
+    owner
