@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from os import getenv
 
 app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
-app.secret_key = getenv("SEACRET_KEY")
+app.secret_key = getenv("SECRET_KEY")
 db = SQLAlchemy(app)
 
 
@@ -23,7 +23,13 @@ def login():
         password = request.form["password"]
         #check
         session["username"] = username
-        return redirect("/")
+        return redirect("/login")
+
+@app.route("/logout")
+def logout():
+    del session["username"]
+    return redirect("/")
+    
 
 @app.route("/newuser", methods=["GET", "POST"])
 def createAccaunt():

@@ -1,11 +1,16 @@
 
-<form action="/login" method="POST">
-    Anna nimesi:
-    <input type="text" name="käyttäjänimi">
-    <p>
-    Anna salasana:
-    <input type="text" name="salasana">
-    <br>
-    <input type="submit" value="Lähetä">
-</form>
-<a href="/newuser">Luo käyttäjä</a>
+{%if session.username %}
+    <p>Olet kirjautunut nimellä {{ session.username }}.</p>
+    <a href="/logout">Kirjaudu ulos</a>
+{% else %}
+    <form action="/login" method="POST">
+        Anna nimesi:
+        <input type="text" name="username">
+        <p>
+        Anna salasana:
+        <input type="text" name="password">
+        <br>
+        <input type="submit" value="Lähetä">
+    </form>
+    <a href="/newuser">Luo käyttäjä</a>
+{% endif %}
