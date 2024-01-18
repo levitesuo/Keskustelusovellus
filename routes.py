@@ -3,13 +3,15 @@ from flask import redirect, render_template, request, session
 from sqlalchemy.sql import text
 from werkzeug.security import check_password_hash, generate_password_hash
 from db import db
-import users
-import topics
+import db_modules.users as users
+import db_modules.topics as topics
+import db_modules.posts as posts
 
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    t = topics.get_topics()
+    return render_template("index.html", content = t)
 
 @app.route("/error")
 def testerror():
@@ -42,7 +44,7 @@ def createAccaunt():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         if password1 != password2:
-            return render_template("error.html", 
+            return render_template("error.html",    
                                    message="Salasanat eroavat", 
                                    returnUrl="/newuser")
         if users.register(username, password1):
@@ -57,6 +59,20 @@ def createTopic():
     topic = request.form["topic"]
     topics.create(topic)
     return redirect("/")
+    
+@app.route("/topic/<int:id>", methods=["GET", "POST"])
+def topic(id):
+    if request.method == "GET":
+        t = topics.get_topic_by_id(id)
+        p = posts.get_posts_by_topic(id)
+        return render_template("topic.html", t = t, p = p)
+    if request.method == "POST":
+        topic_id = id
+        header = request.form["header"]
+        content = request.form["content"]
+        posts.new_post(topic_id, header, content)
+        return redirect(f"/topic/{id}")
+    return "KÄÄK"
     
 @app.route("/users")
 def userlist():

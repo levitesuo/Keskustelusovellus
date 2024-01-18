@@ -1,0 +1,21 @@
+<h2>{{t.header}}</h2>
+{% if session.username %}
+    <form action="/topic/{{t.topic_id}}" method="POST">
+        Luo postaus <br>
+        Otsikko:    <input type="text" name="header"> <br>
+        teksti : </teksti><input type="text" name="content"> <br>
+        <input type="submit" value="Luo">
+    </form>
+{% else %}
+    Kirjaudu sisään luokdaksesi postaus.
+{% endif %}
+<br>
+{% for post in p %}
+    <br>
+    <a href="/topic/{{t.topic_id}}/{{p.id}}">
+    {{post.header}} <br>
+    luotu: {{post.timestamp.strftime("%Y-%m-%d %H:%M")}} <br>
+    luoja: {{post.username}} <br>
+    </a>
+    <p>{{post.content}}</p>
+{% endfor %}

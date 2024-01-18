@@ -8,7 +8,11 @@ CREATE TABLE users (
 CREATE TABLE topics (
     topic_id SERIAL PRIMARY KEY,
     header TEXT NOT NULL,
-    private_key INT
+    owner_id INT NOT NULL,
+    timestamp TIMESTAMP,
+    private_key INT,
+    FOREIGN KEY(owner_id)
+        REFERENCES users (user_id)
 );
 
 CREATE TABLE privrooms (
@@ -25,7 +29,7 @@ CREATE TABLE posts (
     owner_id INT NOT NULL,
     header TEXT NOT NULL,
     content TEXT NOT NULL,
-    post_time TIMESTAMP,
+    timestamp TIMESTAMP,
     FOREIGN KEY (owner_id)
         REFERENCES users (user_id),
     FOREIGN KEY (topic_id)

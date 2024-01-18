@@ -6,6 +6,14 @@ from db import db
 def get_user_id():
     return session.get("user_id", 0)
 
+def check_admin
+
+def get_user_by_id(id):
+    sql = "SELECT * FROM users WHERE user_id =:id"
+    result = db.session.execute(text(sql), {'id':id})
+    user = result.fetchall()
+    return user
+
 def logout():
     del session["user_id"]
     del session["username"]
@@ -28,7 +36,7 @@ def login(username, password):
 def register(username, password):
     try:
         hash_value = generate_password_hash(password)
-        sql = f"INSERT INTO users (username, password, is_admin) VALUES (:username, :password, FALSE);"
+        sql = "INSERT INTO users (username, password, is_admin) VALUES (:username, :password, FALSE);"
         db.session.execute(text(sql), {'username':username, 'password':hash_value})
         db.session.commit()
     except:

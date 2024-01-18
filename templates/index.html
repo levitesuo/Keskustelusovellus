@@ -1,8 +1,15 @@
 <a href="/login">Kirjaudu</a>
-<p>
+<br>
+{% for topic in content %}
+    <br>
+    <a href="/topic/{{topic.topic_id}}">
+    {{topic.header}} <br>
+    luotu: {{topic.timestamp.strftime("%Y-%m-%d %H:%M")}} <br>
+    luoja: {{topic.username}} <br>
+    </a>
+{% endfor %}
 <form action="/createTopic" method="POST">
     Uusi aihe
     <input type="text" name="topic">
-    <p>
     <input type="submit" value="Luo">
 </form>
