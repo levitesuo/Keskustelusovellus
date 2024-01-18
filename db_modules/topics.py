@@ -4,11 +4,30 @@ from db import db
 
 def get_topics():
     sql = """   SELECT topics.*, users.username
-                FROM topics
-                JOIN users ON topics.owner_id = users.user_id"""
+                FROM topics 
+                JOIN users ON topics.owner_id = users.user_id
+                WHERE private_key IS NULL"""
     result = db.session.execute(text(sql))
     t = result.fetchall()
     return t    
+
+def get_accessable_private_topics():
+    if session["is_admin"]:
+        sql = """SELECT topics.*, users.username
+                FROM topics 
+                JOIN users ON topics.owner_id = users.user_id
+                WHERE private_key IS NOT NULL"""
+        result = db.session.execute(text(sql))
+    else:
+        sql = """SELECT topics.*, users.username
+                FROM topics 
+                JOIN users ON topics.owner_id = users.user_id
+                JOIN privrooms ON topics.private_key = privrooms.privroom_key
+                WHERE privrooms.user_id =:user_id'"""
+        result = db.session.execute(text(sql), {'user_id':session['user_id']})
+    private_topics = result.fetchall()
+    return private_topics
+    
 
 def create(topic):
     sql = "INSERT INTO topics (header, owner_id, timestamp) VALUES (:topic, :owner_id, NOW())"

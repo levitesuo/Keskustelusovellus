@@ -15,6 +15,14 @@ def index():
     t = topics.get_topics()
     return render_template("index.html", content = t)
 
+@app.route("/private_test")
+def privtest():
+    t = topics.get_accessable_private_topics()
+    o = []
+    for tt in t:
+        o.append(tt.header)
+    return o
+
 @app.route("/error")
 def testerror():
     return render_template("error.html", message = "Testivirhe")
