@@ -8,8 +8,10 @@
     luoja: {{topic.username}} <br>
     </a>
 {% endfor %}
+{% if session.is_admin %}
 <form action="/createTopic" method="POST">
     Uusi aihe
     <input type="text" name="topic">
     <input type="submit" value="Luo">
 </form>
+{% endif %}
