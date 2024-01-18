@@ -3,7 +3,8 @@
 {% if session.username %}
     <form action="/post/{{p.post_id}}" method="POST">
         Kommentoi <br>
-        teksti :<input type="text" name="content"> <br>
+        teksti :<br>
+        <textarea name="content" rows="4" cols="50"></textarea>
         <input type="submit" value="Luo">
     </form>
 {% else %}

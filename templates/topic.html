@@ -3,7 +3,8 @@
     <form action="/topic/{{t.topic_id}}" method="POST">
         Luo postaus <br>
         Otsikko:    <input type="text" name="header"> <br>
-        teksti : </teksti><input type="text" name="content"> <br>
+        teksti : <br>
+        <textarea name="content" rows="4" cols="50"></textarea>
         <input type="submit" value="Luo">
     </form>
 {% else %}

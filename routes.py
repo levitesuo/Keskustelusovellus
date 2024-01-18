@@ -97,7 +97,7 @@ def deletepost(id):
 @app.route("/post/modify/<int:id>", methods=["GET", "POST"])
 def modifypost(id):
     post = posts.get_post_by_id(id)
-    if not session["is_admin"] or post.owner_id != session["user_id"]:
+    if (not session["is_admin"]) and post.owner_id != session["user_id"]:
         return render_template("error.html", 
                                 message="Ei sallittu.", 
                                 returnUrl="/")
@@ -125,7 +125,7 @@ def post(id):
 @app.route("/comment/delete/<int:id>")
 def deletecomment(id):
     comment = comments.get_comment_by_id(id)
-    if not session["is_admin"] or comment.owner_id != session["user_id"]:
+    if (not session["is_admin"]) and comment.owner_id != session["user_id"]:
         return render_template("error.html", 
                                 message="Ei sallittu.", 
                                 returnUrl="/")
@@ -136,7 +136,7 @@ def deletecomment(id):
 def modifycomment(id):
     comment = comments.get_comment_by_id(id)
     comment = comments.get_comment_by_id(id)
-    if not session["is_admin"] or comment.owner_id != session["user_id"]:
+    if (not session["is_admin"]) and comment.owner_id != session["user_id"]:
         return render_template("error.html", 
                                 message="Ei sallittu.", 
                                 returnUrl="/")
