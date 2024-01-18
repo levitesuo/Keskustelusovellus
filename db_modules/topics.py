@@ -15,6 +15,15 @@ def create(topic):
     db.session.execute(text(sql), {'topic':topic, 'owner_id':session["user_id"]})
     db.session.commit()
 
+def create_private(topic):
+    create(topic)
+    sql1 = "SELECT MAX(topic_id) AS m FROM topics"
+    result = db.session.execute(text(sql1))
+    priv_key = int(result.fetchone().m)
+    sql = "UPDATE topics SET private_key = :priv_key WHERE topic_id=:priv_key"
+    db.session.execute(text(sql),{'priv_key':priv_key})
+    db.session.commit()
+
 def get_topic_by_id(id):
     sql = "SELECT * FROM topics WHERE topic_id =:id"
     result = db.session.execute(text(sql), {'id':id})

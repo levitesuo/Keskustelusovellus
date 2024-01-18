@@ -133,6 +133,7 @@ def deletecomment(id):
     return redirect(f"/post/{comment.post_id}")
     
 @app.route("/comment/<int:id>", methods=["GET", "POST"])
+
 def modifycomment(id):
     comment = comments.get_comment_by_id(id)
     comment = comments.get_comment_by_id(id)
@@ -147,6 +148,11 @@ def modifycomment(id):
         comments.modify_comment_by_id(id, content)
         return redirect(f"/post/{comment.post_id}")
     
+@app.route("/createPrivateTopic", methods=["POST"])
+def newprivtopic():
+    topic = request.form['topic']
+    topics.create_private(topic)
+    return redirect("/")
 
 @app.route("/users")
 def userlist():
