@@ -20,3 +20,8 @@ def get_topic_by_id(id):
     result = db.session.execute(text(sql), {'id':id})
     topic = result.fetchone()
     return topic
+
+def delete_topic_by_id(id):
+    sql = "DELETE FROM topics WHERE topic_id=:id"
+    db.session.execute(text(sql), {'id':id})
+    db.session.commit()

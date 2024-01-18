@@ -3,6 +3,7 @@ from flask import redirect, render_template, request, session
 from sqlalchemy.sql import text
 from werkzeug.security import check_password_hash, generate_password_hash
 from db import db
+from copy import deepcopy
 import db_modules.users as users
 import db_modules.topics as topics
 import db_modules.posts as posts
@@ -44,15 +45,11 @@ def createAccaunt():
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
-        if request.form["is_admin"]: 
-            is_admin = True
-        else:
-            is_admin = False 
         if password1 != password2:
             return render_template("error.html",    
                                    message="Salasanat eroavat", 
                                    returnUrl="/newuser")
-        if users.register(username, password1, is_admin):
+        if users.register(username, password1):
             return redirect("/")
         else:
             return render_template("error.html", 
@@ -63,6 +60,15 @@ def createAccaunt():
 def createTopic():
     topic = request.form["topic"]
     topics.create(topic)
+    return redirect("/")
+    
+@app.route("/topic/delete/<int:id>")
+def deleteTopic(id):
+    if not session["is_admin"]:
+        return render_template("error.html", 
+                                message="Ei sallittu.", 
+                                returnUrl="/")
+    topics.delete_topic_by_id(id)
     return redirect("/")
     
 @app.route("/topic/<int:id>", methods=["GET", "POST"])
@@ -77,7 +83,17 @@ def topic(id):
         content = request.form["content"]
         posts.new_post(topic_id, header, content)
         return redirect(f"/topic/{id}")
-    
+
+@app.route("/post/delete/<int:id>")
+def deletepost(id):
+    post = posts.get_post_by_id(id)
+    if not session["is_admin"] or post.owner_id != session["user_id"]:
+        return render_template("error.html", 
+                                message="Ei sallittu.", 
+                                returnUrl="/")
+    posts.delete_post_by_id(id)
+    return redirect(f"/topic/{post.topic_id}")
+
 @app.route("/post/<int:id>", methods=["GET", "POST"])
 def post(id):
     if request.method == "GET":
@@ -90,6 +106,18 @@ def post(id):
         comments.new_comment(post_id,  content)
         return redirect(f"/post/{id}")
     
+
+@app.route("/comment/delete/<int:id>")
+def deletecomment(id):
+    comment = comments.get_comment_by_id(id)
+    if not session["is_admin"] or comment.owner_id != session["user_id"]:
+        return render_template("error.html", 
+                                message="Ei sallittu.", 
+                                returnUrl="/")
+    comments.delete_comment_by_id(id)
+    return redirect(f"/post/{comment.post_id}")
+    
+
 @app.route("/users")
 def userlist():
     result = db.session.execute(text("SELECT * FROM users"))

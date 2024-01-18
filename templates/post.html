@@ -1,4 +1,5 @@
 <h2>{{p.header}}</h2>
+<p>{{p.content}}</p>
 {% if session.username %}
     <form action="/post/{{p.post_id}}" method="POST">
         Kommentoi <br>
@@ -11,6 +12,9 @@
 <br>
 {% for comment in c %}
     <br>
+    {% if session.user_id == comment.owner_id or session.is_admin %}
+    <a href="/comment/delete/{{comment.comment_id}}"> Poista </a>
+    {% endif %}
     luotu: {{comment.timestamp.strftime("%Y-%m-%d %H:%M")}} <br>
     luoja: {{comment.username}} <br>
     </a>

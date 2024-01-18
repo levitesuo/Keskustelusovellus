@@ -16,3 +16,14 @@ def new_comment(post_id, content):
              VALUES             (:post_id, :content, :owner_id, NOW())"""
     db.session.execute(text(sql), {'post_id':post_id, 'content':content, 'owner_id':session["user_id"]})
     db.session.commit()
+    
+def delete_comment_by_id(id):
+    sql = "DELETE FROM comments WHERE comment_id=:id"
+    db.session.execute(text(sql), {'id':id})
+    db.session.commit()
+    
+def get_comment_by_id(id):
+    sql = "SELECT * FROM comments WHERE comment_id =:id"
+    result = db.session.execute(text(sql), {'id':id})
+    comment = result.fetchone()
+    return comment

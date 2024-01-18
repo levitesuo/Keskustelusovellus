@@ -18,7 +18,20 @@ def new_post(topic_id, header, content):
     db.session.commit()
     
 def get_post_by_id(id):
-    sql = "SELECT * FROM posts WHERE topic_id =:id"
+    sql = "SELECT * FROM posts WHERE post_id =:id"
     result = db.session.execute(text(sql), {'id':id})
     post = result.fetchone()
     return post
+
+def delete_post_by_id(id):
+    sql = "DELETE FROM posts WHERE post_id=:id"
+    db.session.execute(text(sql), {'id':id})
+    db.session.commit()
+    
+def modify_post_by_id(id, content, header):
+    sql = """UPDATE posts
+            SET content=:content,
+                header=:header,
+            WHERE post_id=:id"""
+    result = db.session.execute(text(sql), {'id':id, 'content':content, 'header':header})
+    db.session.commit()

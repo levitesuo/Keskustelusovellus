@@ -36,11 +36,11 @@ def login(username, password):
         else:
             return False
         
-def register(username, password, is_admin):
+def register(username, password):
     try:
         hash_value = generate_password_hash(password)
-        sql = "INSERT INTO users (username, password, is_admin) VALUES (:username, :password, :is_admin);"
-        db.session.execute(text(sql), {'username':username, 'password':hash_value, 'is_admin':is_admin})
+        sql = "INSERT INTO users (username, password) VALUES (:username, :password);"
+        db.session.execute(text(sql), {'username':username, 'password':hash_value,})
         db.session.commit()
     except:
         return False
