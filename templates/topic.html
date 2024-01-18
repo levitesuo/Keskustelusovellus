@@ -12,7 +12,7 @@
 <br>
 {% for post in p %}
     <br>
-    <a href="/topic/{{t.topic_id}}/{{p.id}}">
+    <a href="/post/{{post.post_id}}">
     {{post.header}} <br>
     luotu: {{post.timestamp.strftime("%Y-%m-%d %H:%M")}} <br>
     luoja: {{post.username}} <br>

@@ -6,6 +6,7 @@ from db import db
 import db_modules.users as users
 import db_modules.topics as topics
 import db_modules.posts as posts
+import db_modules.comments as comments
 
 
 @app.route("/")
@@ -76,7 +77,18 @@ def topic(id):
         content = request.form["content"]
         posts.new_post(topic_id, header, content)
         return redirect(f"/topic/{id}")
-    return "KÄÄK"
+    
+@app.route("/post/<int:id>", methods=["GET", "POST"])
+def post(id):
+    if request.method == "GET":
+        p = posts.get_post_by_id(id)
+        c = comments.get_comments_by_post(id)
+        return render_template("post.html", p = p, c = c)
+    if request.method == "POST":
+        post_id = id
+        content = request.form["content"]
+        comments.new_comment(post_id,  content)
+        return redirect(f"/post/{id}")
     
 @app.route("/users")
 def userlist():

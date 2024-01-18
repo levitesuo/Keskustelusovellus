@@ -1,0 +1,18 @@
+<h2>{{p.header}}</h2>
+{% if session.username %}
+    <form action="/post/{{p.post_id}}" method="POST">
+        Kommentoi <br>
+        teksti :<input type="text" name="content"> <br>
+        <input type="submit" value="Luo">
+    </form>
+{% else %}
+    Kirjaudu sisään luokdaksesi kommentti.
+{% endif %}
+<br>
+{% for comment in c %}
+    <br>
+    luotu: {{comment.timestamp.strftime("%Y-%m-%d %H:%M")}} <br>
+    luoja: {{comment.username}} <br>
+    </a>
+    <p>{{comment.content}}</p>
+{% endfor %}

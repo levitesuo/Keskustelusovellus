@@ -16,3 +16,9 @@ def new_post(topic_id, header, content):
              VALUES             (:topic_id, :header, :content, :owner_id, NOW())"""
     db.session.execute(text(sql), {'topic_id':topic_id, 'header':header, 'content':content, 'owner_id':session["user_id"]})
     db.session.commit()
+    
+def get_post_by_id(id):
+    sql = "SELECT * FROM posts WHERE topic_id =:id"
+    result = db.session.execute(text(sql), {'id':id})
+    post = result.fetchone()
+    return post
