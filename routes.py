@@ -3,8 +3,8 @@ from flask import redirect, render_template, request, session
 from sqlalchemy.sql import text
 from werkzeug.security import check_password_hash, generate_password_hash
 from db import db
-from users import login_handler, newuser_handler
-
+import users
+import topics
 
 
 @app.route("/")
@@ -22,16 +22,17 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        if login_handler(username, password):
-            session["username"] = username
+        if not users.login(username, password):
+            return render_template("error.html", 
+                                   message="Väärä salasana tai käyttäjä", 
+                                   returnUrl="/login")
         return redirect("/login")
 
 @app.route("/logout")
 def logout():
-    del session["username"]
+    users.logout()
     return redirect("/")
     
-
 @app.route("/newuser", methods=["GET", "POST"])
 def createAccaunt():
     if request.method == "GET":
@@ -41,15 +42,24 @@ def createAccaunt():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         if password1 != password2:
-            return render_template("error.html", message="Salasanat eroavat", returnUrl="/newuser")
-        if newuser_handler(username, password1):
+            return render_template("error.html", 
+                                   message="Salasanat eroavat", 
+                                   returnUrl="/newuser")
+        if users.register(username, password1):
             return redirect("/")
         else:
-            return render_template("error.html", message="Käyttäjänimi varattu.", returnUrl="/newuser")
+            return render_template("error.html", 
+                                   message="Käyttäjänimi varattu.", 
+                                   returnUrl="/newuser")
     
-
+@app.route("/createTopic", methods=["POST"])
+def createTopic():
+    topic = request.form["topic"]
+    topics.create(topic)
+    return redirect("/")
+    
 @app.route("/users")
-def users():
+def userlist():
     result = db.session.execute(text("SELECT * FROM users"))
     users = result.fetchall()
     t = ""

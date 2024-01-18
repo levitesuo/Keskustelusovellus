@@ -1,14 +1,8 @@
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY, 
     username TEXT NOT NULL UNIQUE, 
+    is_admin BOOLEAN NOT NULL,
     password TEXT NOT NULL
-);
-
-CREATE TABLE admins (
-    admin_id SERIAL PRIMARY KEY, 
-    user_id INT NOT NULL,
-    FOREIGN KEY (user_id)
-        REFERENCES users (user_id)
 );
 
 CREATE TABLE topics (
