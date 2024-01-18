@@ -27,3 +27,9 @@ def get_comment_by_id(id):
     result = db.session.execute(text(sql), {'id':id})
     comment = result.fetchone()
     return comment
+
+def modify_comment_by_id(id, content):
+    sql = "UPDATE comments SET content = :content WHERE comment_id=:id"
+    result = db.session.execute(text(sql), {'id':id, 'content':content})
+    db.session.commit()
+    

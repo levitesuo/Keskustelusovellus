@@ -94,6 +94,22 @@ def deletepost(id):
     posts.delete_post_by_id(id)
     return redirect(f"/topic/{post.topic_id}")
 
+@app.route("/post/modify/<int:id>", methods=["GET", "POST"])
+def modifypost(id):
+    post = posts.get_post_by_id(id)
+    if not session["is_admin"] or post.owner_id != session["user_id"]:
+        return render_template("error.html", 
+                                message="Ei sallittu.", 
+                                returnUrl="/")
+    if request.method == "GET":
+        return render_template("modifypost.html", post = post)
+    if request.method == "POST":
+        header = request.form["header"]
+        content = request.form["content"]
+        posts.modify_post_by_id(id, content, header)
+        return redirect(f"/topic/{post.topic_id}")
+    
+
 @app.route("/post/<int:id>", methods=["GET", "POST"])
 def post(id):
     if request.method == "GET":
@@ -106,7 +122,6 @@ def post(id):
         comments.new_comment(post_id,  content)
         return redirect(f"/post/{id}")
     
-
 @app.route("/comment/delete/<int:id>")
 def deletecomment(id):
     comment = comments.get_comment_by_id(id)
@@ -116,6 +131,21 @@ def deletecomment(id):
                                 returnUrl="/")
     comments.delete_comment_by_id(id)
     return redirect(f"/post/{comment.post_id}")
+    
+@app.route("/comment/<int:id>", methods=["GET", "POST"])
+def modifycomment(id):
+    comment = comments.get_comment_by_id(id)
+    comment = comments.get_comment_by_id(id)
+    if not session["is_admin"] or comment.owner_id != session["user_id"]:
+        return render_template("error.html", 
+                                message="Ei sallittu.", 
+                                returnUrl="/")
+    if request.method == "GET":
+        return render_template("modifycomment.html", comment = comment)
+    if request.method == "POST":
+        content = request.form["content"]
+        comments.modify_comment_by_id(id, content)
+        return redirect(f"/post/{comment.post_id}")
     
 
 @app.route("/users")

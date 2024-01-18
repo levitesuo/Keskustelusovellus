@@ -1,0 +1,9 @@
+
+<form action="/modify/{{post.post_id}}" method="POST">
+    <input type="text" name="header" value="{{post.header}}">
+    <br>
+    <textarea name="content" rows="4" cols="50">
+        {{post.content}}
+    </textarea>
+    <input type="submit" value="muokkaa">
+</form>

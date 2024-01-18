@@ -29,9 +29,6 @@ def delete_post_by_id(id):
     db.session.commit()
     
 def modify_post_by_id(id, content, header):
-    sql = """UPDATE posts
-            SET content=:content,
-                header=:header,
-            WHERE post_id=:id"""
+    sql = "UPDATE posts SET content = :content, header = :header WHERE post_id=:id"
     result = db.session.execute(text(sql), {'id':id, 'content':content, 'header':header})
     db.session.commit()

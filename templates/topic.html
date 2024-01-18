@@ -14,6 +14,7 @@
     <br>
     {% if session.user_id == post.owner_id or session.is_admin %}
     <a href="/post/delete/{{post.post_id}}"> Poista </a>
+    <a href="/post/modify/{{post.post_id}}"> Muokkaa </a>
     {% endif %}
     <a href="/post/{{post.post_id}}">
     {{post.header}} <br>
