@@ -1,4 +1,8 @@
 <a href="/login">Kirjaudu</a>
+{% if session.is_admin %}
+<br>
+<a href="/priv_manager">Yksityspalstat työkalu</a>
+{% endif %}
 <br>
 {% for topic in content %}
     <br>

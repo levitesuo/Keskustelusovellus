@@ -1,9 +1,7 @@
 from app import app
 from flask import redirect, render_template, request, session
 from sqlalchemy.sql import text
-from werkzeug.security import check_password_hash, generate_password_hash
 from db import db
-from copy import deepcopy
 import db_modules.users as users
 import db_modules.topics as topics
 import db_modules.posts as posts
@@ -39,6 +37,7 @@ def login():
                                    message="Väärä salasana tai käyttäjä", 
                                    returnUrl="/login")
         return redirect("/login")
+
 
 @app.route("/logout")
 def logout():
@@ -161,6 +160,15 @@ def newprivtopic():
     topic = request.form['topic']
     topics.create_private(topic)
     return redirect("/")
+
+@app.route("/priv_manager", methods=["GET", "POST"])
+def priv_manager():
+    private_topics = topics.get_accessable_private_topics()
+    if request.method == "GET":
+        return render_template("priv_manager.html", pri = private_topics)
+    if request.method == "POST":
+        username = request.form["username"]
+        return render_template("priv_manager.html", pri = private_topics)
 
 @app.route("/users")
 def userlist():

@@ -1,0 +1,10 @@
+<table>
+{% for topic in pri %}
+        <tr>
+            <th>{{topic.header}}</th>
+            <th>{{topic.username}}</th>
+            <th>{{topic.timestamp.strftime("%Y-%m-%d %H:%M")}}</th>
+        </tr>
+{% endfor %}
+<tr>TEST</tr>
+</table>
