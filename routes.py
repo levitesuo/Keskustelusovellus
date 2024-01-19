@@ -170,13 +170,31 @@ def priv_manager():
 @app.route("/priv_manager/<int:id>", methods=["GET", "POST"])
 def priv_room_manager(id):
     u = privrooms.get_users_by_privroom_id(id)
+    t = topics.get_topic_by_id(id)
     if request.method == "GET":
-        return render_template("priv_manager2.html", users = u)
+        return render_template("priv_manager2.html", users = u, topic = t)
     if request.method == "POST":
         username = request.form["username"]
         private_key = request.form["private_key"]
         privrooms.addslip(username, private_key)
         return redirect(f"/priv_manager/{id}")
+
+@app.route("/addpriv/<int:topic_id>", methods=["POST"])
+def add_access(topic_id):
+    username = request.form["username"]
+    try:
+        user_id = users.get_user_id_by_name(username)
+        privrooms.give_user_access(user_id, topic_id)
+        return redirect(f"/priv_manager/{topic_id}")
+    except:
+        return render_template("error.html", 
+                                message="Käyttäjää ei olemassa.", 
+                                returnUrl=f"/priv_manager/{topic_id}")
+
+@app.route("/delpriv/<int:user_id>/<int:topic_id>")
+def del_access(user_id, topic_id):
+    privrooms.delet_user_access(user_id, topic_id)
+    return redirect(f"/priv_manager/{topic_id}")
 
 @app.route("/users")
 def userlist():

@@ -19,11 +19,11 @@ def get_accessable_private_topics():
                 WHERE private_key IS NOT NULL"""
         result = db.session.execute(text(sql))
     else:
-        sql = """SELECT topics.*, users.username
-                FROM topics 
-                JOIN users ON topics.owner_id = users.user_id
-                JOIN privrooms ON topics.private_key = privrooms.privroom_key
-                WHERE privrooms.user_id =:user_id'"""
+        sql = """SELECT t.*, u.username
+                FROM topics t
+                JOIN privrooms p ON t.private_key = p.private_key
+                JOIN users u ON t.owner_id = u.user_id
+                WHERE p.user_id = :user_id"""
         result = db.session.execute(text(sql), {'user_id':session['user_id']})
     private_topics = result.fetchall()
     return private_topics

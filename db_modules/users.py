@@ -12,6 +12,12 @@ def get_user_by_id(id):
     user = result.fetchone()
     return user
 
+def get_user_id_by_name(username):
+    sql = "SELECT users.user_id FROM users WHERE username = :username"
+    result = db.session.execute(text(sql), {'username':username})
+    user_id = int(result.fetchone().user_id)
+    return user_id
+
 def logout():
     del session["user_id"]
     del session["username"]

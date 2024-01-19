@@ -1,0 +1,14 @@
+{{topic.header}}
+<table> <tr>
+    <form action="/addpriv/{{topic.topic_id}}" method="POST">
+        <th><input type="text" name="username"></th>
+        <th><input type="submit" value="Lisää"></th>
+    </form>
+</tr>
+{% for user in users %}
+    <tr>
+        <th>{{user.username}}</th>
+        <th><a href="/delpriv/{{user.user_id}}/{{topic.topic_id}}"> Poista </a></th>
+    </tr>
+{% endfor %}
+</table>
