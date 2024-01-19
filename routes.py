@@ -1,7 +1,5 @@
 from app import app
 from flask import redirect, render_template, request, session
-from sqlalchemy.sql import text
-from db import db
 import db_modules.users as users
 import db_modules.topics as topics
 import db_modules.posts as posts
@@ -194,12 +192,3 @@ def add_access(topic_id):
 def del_access(user_id, topic_id):
     privrooms.delet_user_access(user_id, topic_id)
     return redirect(f"/priv_manager/{topic_id}")
-
-@app.route("/users")
-def userlist():
-    result = db.session.execute(text("SELECT * FROM users"))
-    users = result.fetchall()
-    t = ""
-    for u in users:
-        t += f"<p>{u.username}"
-    return t
