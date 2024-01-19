@@ -141,7 +141,6 @@ def deletecomment(id):
     return redirect(f"/post/{comment.post_id}")
     
 @app.route("/comment/<int:id>", methods=["GET", "POST"])
-
 def modifycomment(id):
     comment = comments.get_comment_by_id(id)
     comment = comments.get_comment_by_id(id)
