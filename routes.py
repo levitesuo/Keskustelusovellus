@@ -6,6 +6,7 @@ import db_modules.users as users
 import db_modules.topics as topics
 import db_modules.posts as posts
 import db_modules.comments as comments
+import db_modules.privrooms as privrooms
 
 
 @app.route("/")
@@ -161,14 +162,21 @@ def newprivtopic():
     topics.create_private(topic)
     return redirect("/")
 
-@app.route("/priv_manager", methods=["GET", "POST"])
+@app.route("/priv_manager")
 def priv_manager():
     private_topics = topics.get_accessable_private_topics()
+    return render_template("priv_manager.html", pri = private_topics)
+
+@app.route("/priv_manager/<int:id>", methods=["GET", "POST"])
+def priv_room_manager(id):
+    u = privrooms.get_users_by_privroom_id(id)
     if request.method == "GET":
-        return render_template("priv_manager.html", pri = private_topics)
+        return render_template("priv_manager2.html", users = u)
     if request.method == "POST":
         username = request.form["username"]
-        return render_template("priv_manager.html", pri = private_topics)
+        private_key = request.form["private_key"]
+        privrooms.addslip(username, private_key)
+        return redirect(f"/priv_manager/{id}")
 
 @app.route("/users")
 def userlist():

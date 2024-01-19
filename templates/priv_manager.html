@@ -1,9 +1,15 @@
 <table>
+    <tr>
+        <th>Nimi</th>
+        <th>Omistaja</th>
+        <th>Luotu</th>
+    </tr>
 {% for topic in pri %}
         <tr>
             <th>{{topic.header}}</th>
             <th>{{topic.username}}</th>
             <th>{{topic.timestamp.strftime("%Y-%m-%d %H:%M")}}</th>
+            <th><a href = "/priv_manager/{{topic.topic_id}}">Manage acces</a></th>
         </tr>
 {% endfor %}
 <tr>TEST</tr>

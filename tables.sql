@@ -20,6 +20,7 @@ CREATE TABLE privrooms (
     slip_id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     private_key INT NOT NULL,
+    timestamp TIMESTAMP,
     FOREIGN KEY(user_id)
         REFERENCES users (user_id)
         ON DELETE CASCADE
