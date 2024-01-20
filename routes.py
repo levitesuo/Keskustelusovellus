@@ -74,7 +74,9 @@ def deleteTopic(id):
         return render_template("error.html", 
                                 message="Ei sallittu.", 
                                 returnUrl="/")
+    t = topics.get_topic_by_id(id).private_key
     topics.delete_topic_by_id(id)
+    if t: return redirect("/priv_topics")
     return redirect("/")
     
 @app.route("/topic/<int:id>", methods=["GET", "POST"])

@@ -11,6 +11,7 @@
 <br>
 <a href="/priv_topics">Yksityispalstat</a>
 <br> <br>
+
 {% for topic in content %}
     <br>
     <a href="/topic/{{topic.topic_id}}">{{topic.header}}</a>
@@ -18,14 +19,20 @@
         <a href="/topic/delete/{{topic.topic_id}}">Poista</a>
     {% endif %}
     <br>
+    Postauksien määrä: {{topic.post_count}}
+    <br>
+    Viimeisin postaus: {{topic.last_post.strftime("%Y-%m-%d %H:%M")}}
+    <br>
 {% endfor %}
 <br>
+
 {% if session.is_admin %}
 <form action="/createTopic" method="POST">
     Uusi aihe: 
     <input type="text" name="topic">
     <input type="submit" value="Luo">
 </form>
+
 <form action="/createPrivateTopic" method="POST">
     Yksityinen aihe: 
     <input type="text" name="topic">

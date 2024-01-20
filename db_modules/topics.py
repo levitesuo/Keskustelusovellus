@@ -3,20 +3,28 @@ from flask import session
 from db import db
 
 def get_topics():
-    sql = """   SELECT topics.*, users.username
+    sql = """   SELECT topics.*, users.username, 
+                COUNT(posts.post_id) AS post_count,
+                MAX(posts.timestamp) AS last_post
                 FROM topics 
                 JOIN users ON topics.owner_id = users.user_id
-                WHERE private_key IS NULL"""
+                JOIN posts ON topics.topic_id = posts.topic_id
+                WHERE private_key IS NULL
+                GROUP BY topics.topic_id, users.username"""
     result = db.session.execute(text(sql))
     t = result.fetchall()
     return t    
 
 def get_accessable_private_topics():
     if session["is_admin"]:
-        sql = """SELECT topics.*, users.username
-                FROM topics 
-                JOIN users ON topics.owner_id = users.user_id
-                WHERE private_key IS NOT NULL"""
+        sql = """   SELECT topics.*, users.username, 
+                    COUNT(posts.post_id) AS post_count,
+                    MAX(posts.timestamp) AS last_post
+                    FROM topics 
+                    JOIN users ON topics.owner_id = users.user_id
+                    JOIN posts ON topics.topic_id = posts.topic_id
+                    WHERE private_key IS NOT NULL
+                    GROUP BY topics.topic_id, users.username"""
         result = db.session.execute(text(sql))
     else:
         sql = """SELECT t.*, u.username
@@ -28,7 +36,6 @@ def get_accessable_private_topics():
     private_topics = result.fetchall()
     return private_topics
     
-
 def create(topic):
     sql = "INSERT INTO topics (header, owner_id, timestamp) VALUES (:topic, :owner_id, NOW())"
     db.session.execute(text(sql), {'topic':topic, 'owner_id':session["user_id"]})
