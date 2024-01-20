@@ -5,12 +5,14 @@ from db import db
 def get_topics():
     sql = """   SELECT topics.*, users.username, 
                 COUNT(posts.post_id) AS post_count,
-                MAX(posts.timestamp) AS last_post
+                MAX(posts.timestamp) AS last_post,
+                COALESCE(MAX(posts.timestamp), topics.timestamp) AS o
                 FROM topics 
                 JOIN users ON topics.owner_id = users.user_id
-                JOIN posts ON topics.topic_id = posts.topic_id
+                LEFT JOIN posts ON topics.topic_id = posts.topic_id
                 WHERE private_key IS NULL
-                GROUP BY topics.topic_id, users.username"""
+                GROUP BY topics.topic_id, users.username
+                ORDER BY o DESC"""
     result = db.session.execute(text(sql))
     t = result.fetchall()
     return t    

@@ -21,7 +21,12 @@
     <br>
     Postauksien määrä: {{topic.post_count}}
     <br>
-    Viimeisin postaus: {{topic.last_post.strftime("%Y-%m-%d %H:%M")}}
+    Viimeisin postaus: 
+    {% if topic.last_post %}
+        {{topic.last_post.strftime("%Y-%m-%d %H:%M")}}
+    {% else %}
+        Ei vielä postauksia
+    {% endif %}
     <br>
 {% endfor %}
 <br>
