@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Leevin Tsoha prokkis</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}"> 
+    </head>
+    <body>
+        <ul class="navBar"> 
+            <li>
+                <form action="/search" method="POST"> 
+                    <input type="text" name="key">
+                    <input type="submit" value="Hae">
+                </form>
+            </li>
+            <li class=".navBar"><a href="/login">Kirjaudu</a></li>
+            <li class=".navBar"><a href="/priv_topics">Yksityispalstat</a></li>
+        </ul>
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

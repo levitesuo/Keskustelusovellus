@@ -6,6 +6,9 @@ import db_modules.posts as posts
 import db_modules.comments as comments
 import db_modules.privrooms as privrooms
 
+@app.route("/styles.css")
+def css():
+    return render_template("styles.css")
 
 @app.route("/")
 def index():

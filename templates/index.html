@@ -1,15 +1,9 @@
-<form action="/search" method="POST">
-    Haku: 
-    <input type="text" name="key">
-    <input type="submit" value="Hae">
-</form>
-<a href="/login">Kirjaudu</a>
+{% extends  "navBar.html" %}
+{% block content %}
 {% if session.is_admin %}
 <br>
 <a href="/priv_manager">Yksityspalstat työkalu</a>
 {% endif %}
-<br>
-<a href="/priv_topics">Yksityispalstat</a>
 <br> <br>
 
 {% for topic in content %}
@@ -44,3 +38,4 @@
     <input type="submit" value="Luo">
 </form>
 {% endif %}
+{% endblock  %}

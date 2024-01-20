@@ -1,0 +1,31 @@
+ul.navBar {
+    list-style-type: none;
+    overflow: hidden;
+    background: #E2725B;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    padding: 0 100px;
+}
+
+
+
+ul.navBar li a {
+    display: flex;
+    flex: 1;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+ul.navBar li a:hover {
+    background-color: #a85948;
+}
+
+ul.navBar li form {
+    text-align: center;
+}
