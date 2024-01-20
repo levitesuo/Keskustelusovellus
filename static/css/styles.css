@@ -1,31 +1,42 @@
-ul.navBar {
-    list-style-type: none;
-    overflow: hidden;
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: Arial, Tahoma, Serif;
+    color: #263238;
+}
+
+nav {
+    padding: 1rem 2rem;
     background: #E2725B;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    height: 70px;
-    padding: 0 100px;
 }
 
-
-
-ul.navBar li a {
+nav ul {  
+    list-style: none;
     display: flex;
-    flex: 1;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+nav li {
+    padding-left: 1rem;
+}
+
+nav li a {
     color: black;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
+    font: Tahoma;
+    text-decoration: solid;
+    padding: 15px;  
 }
 
-/* Change the link color to #111 (black) on hover */
-ul.navBar li a:hover {
-    background-color: #a85948;
+nav li:hover a {
+    background-color: #994d3d;
 }
 
-ul.navBar li form {
-    text-align: center;
-}
+nav form {
+
+  }
+  
+
