@@ -1,21 +1,25 @@
+<form action="/search" method="POST">
+    Haku: 
+    <input type="text" name="key">
+    <input type="submit" value="Hae">
+</form>
 <a href="/login">Kirjaudu</a>
 {% if session.is_admin %}
 <br>
 <a href="/priv_manager">Yksityspalstat työkalu</a>
 {% endif %}
 <br>
+<a href="/priv_topics">Yksityispalstat</a>
+<br> <br>
 {% for topic in content %}
     <br>
+    <a href="/topic/{{topic.topic_id}}">{{topic.header}}</a>
     {% if session.is_admin %}
         <a href="/topic/delete/{{topic.topic_id}}">Poista</a>
     {% endif %}
-    <a href="/topic/{{topic.topic_id}}">
-    {{topic.header}} 
-     <br>
-    luotu: {{topic.timestamp.strftime("%Y-%m-%d %H:%M")}} <br>
-    luoja: {{topic.username}} <br>
-    </a>
+    <br>
 {% endfor %}
+<br>
 {% if session.is_admin %}
 <form action="/createTopic" method="POST">
     Uusi aihe: 

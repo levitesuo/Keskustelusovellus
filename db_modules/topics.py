@@ -53,3 +53,19 @@ def delete_topic_by_id(id):
     sql = "DELETE FROM topics WHERE topic_id=:id"
     db.session.execute(text(sql), {'id':id})
     db.session.commit()
+
+def get_topics_by_search(key):
+    sql = """   SELECT DISTINCT p.*, u.username 
+                FROM posts p
+                JOIN users u ON p.owner_id = u.user_id
+                JOIN topics t ON p.topic_id = t.topic_id
+                JOIN privrooms pr ON (
+                (t.private_key = pr.private_key 
+                AND pr.user_id = :user_id)
+                OR t.private_key IS NULL)
+                WHERE p.content LIKE :query
+                OR p.header LIKE :query"""
+    result = db.session.execute(text(sql),{'user_id':session["user_id"], 'query':key})   
+    stuff = result.fetchall()
+    return stuff
+    

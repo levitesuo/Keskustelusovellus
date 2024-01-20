@@ -26,7 +26,7 @@ def logout():
 def login(username, password):
     sql = "SELECT * FROM users WHERE username=:username"
     result = db.session.execute(text(sql), {'username':username})
-    user = result.fetchone()
+    user = result.fetchone()    
     if not user:
         return False
     else:

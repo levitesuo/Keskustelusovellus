@@ -1,0 +1,12 @@
+{% for topic in content %}
+    <br>
+    {% if session.is_admin %}
+        <a href="/topic/delete/{{topic.topic_id}}">Poista</a>
+    {% endif %}
+    <a href="/topic/{{topic.topic_id}}">
+    {{topic.header}} 
+     <br>
+    luotu: {{topic.timestamp.strftime("%Y-%m-%d %H:%M")}} <br>
+    luoja: {{topic.username}} <br>
+    </a>
+{% endfor %}

@@ -3,4 +3,4 @@ Tietokannan käynnistys
     pgql
 
 To create tables use
-    psql < tables.sql
+    psql < tables.sql   

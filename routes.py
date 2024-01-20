@@ -188,7 +188,18 @@ def add_access(topic_id):
                                 message="Käyttäjää ei olemassa.", 
                                 returnUrl=f"/priv_manager/{topic_id}")
 
+@app.route("/priv_topics")
+def privtopics():
+    t = topics.get_accessable_private_topics()
+    return render_template("priv_topics.html", content = t)
+
 @app.route("/delpriv/<int:user_id>/<int:topic_id>")
 def del_access(user_id, topic_id):
     privrooms.delet_user_access(user_id, topic_id)
     return redirect(f"/priv_manager/{topic_id}")
+    
+@app.route("/search", methods = ["POST"])
+def search():
+    query = request.form["key"]
+    result = topics.get_topics_by_search(query)
+    return render_template(f"searchresult.html", content = result)
