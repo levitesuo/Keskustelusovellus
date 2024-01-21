@@ -1,18 +1,19 @@
-
+{% extends "navBar.html" %}
+{% block content %}
 {%if session.username %}
-    <p>Olet kirjautunut nimellä {{ session.username }}.</p>
-    <a href="/logout">Kirjaudu ulos</a>
-    <p>
+    Olet kirjautunut nimellä {{ session.username }}.
+    <a href="/logout">Kirjaudu ulos <br> käyttäjältä admin</a>
     <a href="/">Aloitussivulle</a>
 {% else %}
-    <form action="/login" method="POST">
-        Anna nimesi:
-        <input type="text" name="username">
-        <p>
-        Anna salasana:
-        <input type="password" name="password">
+    <form action="/login" method="POST" class="login">
+        Käyttäjänimi:
+        <input type="text   " name="username" placeholder="Käytäjänimi">
         <br>
-        <input type="submit" value="Lähetä">
+        Salasana:
+        <input type="password" name="password" placeholder="Salasana">
+        <br>
+        <input type="submit" value="Kirjaudu">
     </form>
-    <a href="/newuser">Luo käyttäjä</a>
+    <a class="f" href="/newuser">Luo käyttäjä</a>
 {% endif %}
+{% endblock %}

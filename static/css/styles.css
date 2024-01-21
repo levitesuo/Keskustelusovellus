@@ -11,7 +11,7 @@ body {
 }
 
 .content {
-    max-width: 500px;
+    max-width: 700px;
     margin: auto;
     background: #d98877;
     padding: 10px;
@@ -112,4 +112,8 @@ p {
 
 .notice {
     color: darkblue;
+}
+
+.login {
+
 }

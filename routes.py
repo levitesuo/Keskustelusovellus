@@ -38,7 +38,7 @@ def login():
             return render_template("error.html", 
                                    message="Väärä salasana tai käyttäjä", 
                                    returnUrl="/login")
-        return redirect("/login")
+        return redirect("/")
 
 
 @app.route("/logout")

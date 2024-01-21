@@ -13,10 +13,11 @@
                         <input type="text" name="key">
                         <input type="submit" value=&#x1F50D;>   
                     </form></li>
-                    <li><a href="/priv_topics">Yksityispalstat</a></li>
                     {% if session.username %}
-                    <li><a href="/logout">Kirjaudu ulos</a></li>
+                        <li><a href="/priv_topics">Yksityispalstat</a></li>
+                        <li><a href="/logout">Kirjaudu ulos <br> käyttäjältä {{session.username}}</a></li>
                     {% else %}
+                    <li><a href="/priv_topics" hidden>Yksityispalstat</a></li>
                     <li><a href="/login">Kirjaudu</a></li>
                     {% endif %}
                 </ul>

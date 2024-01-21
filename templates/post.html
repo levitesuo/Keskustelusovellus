@@ -1,24 +1,27 @@
+ {% extends "navBar.html" %}
+ {% block content %}
 <h2>{{p.header}}</h2>
 <p>{{p.content}}</p>
 {% if session.username %}
     <form action="/post/{{p.post_id}}" method="POST">
         Kommentoi <br>
-        teksti :<br>
         <textarea name="content" rows="4" cols="50"></textarea>
         <input type="submit" value="Luo">
     </form>
 {% else %}
-    Kirjaudu sisään luokdaksesi kommentti.
+    <t class="notice">Kirjaudu sisään luokdaksesi kommentti.</t>
 {% endif %}
 <br>
 {% for comment in c %}
     <br>
     {% if session.user_id == comment.owner_id or session.is_admin %}
-    <a href="/comment/delete/{{comment.comment_id}}"> Poista </a>
-    <a href="/comment/{{comment.comment_id}}"> Muokkaa </a>
+    <a href="/comment/delete/{{comment.comment_id}}" class="delete"> Poista </a>
+    <a href="/comment/{{comment.comment_id}}" class="modify"> Muokkaa </a>
+    <br>
     {% endif %}
     luotu: {{comment.timestamp.strftime("%Y-%m-%d %H:%M")}} <br>
     luoja: {{comment.username}} <br>
     </a>
     <p>{{comment.content}}</p>
 {% endfor %}
+{% endblock %}

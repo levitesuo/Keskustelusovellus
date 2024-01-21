@@ -3,7 +3,7 @@
 <h2>{{t.header}}</h2>
 {% if session.username %}
     <form action="/topic/{{t.topic_id}}" method="POST">
-        Luo postaus <br>
+        Luo postaus kanavalle {{t.header}}<br>
         Otsikko:    <input type="text" name="header"> 
         <br><br>
         <textarea name="content" rows="4" cols="50"></textarea>
