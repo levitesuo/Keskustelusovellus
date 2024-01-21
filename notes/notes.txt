@@ -17,11 +17,12 @@ TO DO
         post title 1-20
         post contetn 0<
     Style
-        reqister page
+        OK reqister page
+        searh page
         modify  
             comment
             post
         priv manager
             1
             2
-        
+    Search funktion is weird
