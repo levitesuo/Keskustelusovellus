@@ -15,7 +15,7 @@
                     </form></li>
                     {% if session.username %}
                         <li><a href="/priv_topics">Yksityispalstat</a></li>
-                        <li><a href="/logout">Kirjaudu ulos <br> käyttäjältä {{session.username}}</a></li>
+                        <li><a href="/logout">Kirjaudu ulos käyttäjältä {{session.username}}</a></li>
                     {% else %}
                     <li><a href="/priv_topics" hidden>Yksityispalstat</a></li>
                     <li><a href="/login">Kirjaudu</a></li>

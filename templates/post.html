@@ -5,7 +5,7 @@
 {% if session.username %}
     <form action="/post/{{p.post_id}}" method="POST">
         Kommentoi <br>
-        <textarea name="content" rows="4" cols="50"></textarea>
+        <div class="ta_padding"><textarea name="content" rows="4" cols="50"></textarea></div>
         <input type="submit" value="Luo">
     </form>
 {% else %}

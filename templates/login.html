@@ -5,15 +5,15 @@
     <a href="/logout">Kirjaudu ulos <br> käyttäjältä admin</a>
     <a href="/">Aloitussivulle</a>
 {% else %}
-    <form action="/login" method="POST" class="login">
-        Käyttäjänimi:
-        <input type="text   " name="username" placeholder="Käytäjänimi">
-        <br>
-        Salasana:
-        <input type="password" name="password" placeholder="Salasana">
-        <br>
-        <input type="submit" value="Kirjaudu">
-    </form>
-    <a class="f" href="/newuser">Luo käyttäjä</a>
+    <div class="login">
+        <form action="/login" method="POST" >
+            <input type="text" name="username" placeholder="Käytäjänimi">
+            <br>
+            <input type="password" name="password" placeholder="Salasana">
+            <br>
+            <input type="submit" value="Kirjaudu">
+        </form>
+        <a href="/newuser">Luo käyttäjä</a>
+    </div>
 {% endif %}
 {% endblock %}

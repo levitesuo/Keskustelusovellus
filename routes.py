@@ -98,12 +98,12 @@ def topic(id):
 @app.route("/post/delete/<int:id>")
 def deletepost(id):
     post = posts.get_post_by_id(id)
-    if not session["is_admin"] or post.owner_id != session["user_id"]:
-        return render_template("error.html", 
+    if session["is_admin"] or post.owner_id == session["user_id"]:
+        posts.delete_post_by_id(id)
+        return redirect(f"/topic/{post.topic_id}")
+    return render_template("error.html", 
                                 message="Ei sallittu.", 
                                 returnUrl="/")
-    posts.delete_post_by_id(id)
-    return redirect(f"/topic/{post.topic_id}")
 
 @app.route("/post/modify/<int:id>", methods=["GET", "POST"])
 def modifypost(id):

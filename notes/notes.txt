@@ -4,3 +4,24 @@ Tietokannan käynnistys
 
 To create tables use
     psql < tables.sql   
+
+admin admin
+Käärme Käärme
+Harry Harry
+Zayn Zayn
+
+TO DO
+    limit lengths
+        password 4 - 20
+        username 2-12
+        post title 1-20
+        post contetn 0<
+    Style
+        reqister page
+        modify  
+            comment
+            post
+        priv manager
+            1
+            2
+        

@@ -3,10 +3,10 @@
 <h2>{{t.header}}</h2>
 {% if session.username %}
     <form action="/topic/{{t.topic_id}}" method="POST">
-        Luo postaus kanavalle {{t.header}}<br>
+        Luo postaus kanavalle <t class="underline">{{t.header}}</t><br>
         Otsikko:    <input type="text" name="header"> 
         <br><br>
-        <textarea name="content" rows="4" cols="50"></textarea>
+        <div class="ta_padding"><textarea name="content" rows="4" cols="50"></textarea></div>
         <input type="submit" value="Luo">
     </form>
 {% else %}
