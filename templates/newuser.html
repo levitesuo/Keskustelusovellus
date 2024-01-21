@@ -1,12 +1,24 @@
-<form action="/newuser" method="POST">
-    Anna nimesi:
-        <input type="text" name="username">
-    <br>
-        Anna salasana:
-        <input type="password" name="password1">
-    <br>
-        Anna salasana uudestaan:
-        <input type="password" name="password2">
-    <br>
-        <input type="submit" value="Lähetä">
-</form>
+{% extends "navBar.html" %}
+{% block content %}
+<div class="newuser">
+    <form action="/newuser" method="POST">
+        <table>
+            <tr>
+                <th>Anna nimesi:</th>
+                <th><input type="text" name="username"></th>
+            </tr>
+            <tr>
+                <th>Anna salasana:</th>
+                <th><input type="password" name="password1"></th>
+            </tr>
+            <tr>
+                <th>Anna salasana uudestaan:</th>
+                <th><input type="password" name="password2"></th>
+            </tr>
+            <tr> <th></th>
+            <th><input type="submit" value="Lähetä"></th>
+            </tr>
+        </table>
+    </form>
+</div>
+{% endblock %}
