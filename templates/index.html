@@ -1,41 +1,37 @@
 {% extends  "navBar.html" %}
 {% block content %}
 {% if session.is_admin %}
-<br>
-<a href="/priv_manager">Yksityspalstat työkalu</a>
+<div class="adminTools_bar">
+    <ul class="at" >
+    <li><form action="/createTopic" method="POST">
+        Uusi aihe: 
+        <input type="text" name="topic">
+        <input type="submit" value="Luo">
+    </form></li>
+    <li><a href="/priv_manager">Yksityspalstat &#9881;</a></li>
+</ul>
+</div>
 {% endif %}
-<br> <br>
 
 {% for topic in content %}
     <br>
-    <a href="/topic/{{topic.topic_id}}">{{topic.header}}</a>
     {% if session.is_admin %}
-        <a href="/topic/delete/{{topic.topic_id}}">Poista</a>
+        <a href="/topic/delete/{{topic.topic_id}}" class="delete">Poista</a>
     {% endif %}
-    <br>
-    Postauksien määrä: {{topic.post_count}}
-    <br>
-    Viimeisin postaus: 
-    {% if topic.last_post %}
-        {{topic.last_post.strftime("%Y-%m-%d %H:%M")}}
-    {% else %}
-        Ei vielä postauksia
-    {% endif %}
-    <br>
+        <a href="/topic/{{topic.topic_id}}" class="topic_list">
+            <ul >
+                <li><h4>{{topic.header}}</h4></li>
+                <li>Postauksien määrä: {{topic.post_count}}</li>
+                <li>
+                    Viimeisin postaus: 
+                    {% if topic.last_post %}
+                        {{topic.last_post.strftime("%Y-%m-%d %H:%M")}}
+                    {% else %}
+                        Ei vielä postauksia
+                    {% endif %}
+                </li>
+            </ul>
+        </a>
+    <hr class="line">
 {% endfor %}
-<br>
-
-{% if session.is_admin %}
-<form action="/createTopic" method="POST">
-    Uusi aihe: 
-    <input type="text" name="topic">
-    <input type="submit" value="Luo">
-</form>
-
-<form action="/createPrivateTopic" method="POST">
-    Yksityinen aihe: 
-    <input type="text" name="topic">
-    <input type="submit" value="Luo">
-</form>
-{% endif %}
 {% endblock  %}

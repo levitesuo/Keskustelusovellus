@@ -1,26 +1,31 @@
+{% extends "navBar.html" %}
+{% block content %}
 <h2>{{t.header}}</h2>
 {% if session.username %}
     <form action="/topic/{{t.topic_id}}" method="POST">
         Luo postaus <br>
-        Otsikko:    <input type="text" name="header"> <br>
-        teksti : <br>
+        Otsikko:    <input type="text" name="header"> 
+        <br><br>
         <textarea name="content" rows="4" cols="50"></textarea>
         <input type="submit" value="Luo">
     </form>
 {% else %}
-    Kirjaudu sisään luokdaksesi postaus.
+    <t class="notice">Kirjaudu sisään luokdaksesi postaus.</t>
 {% endif %}
 <br>
 {% for post in p %}
     <br>
     {% if session.user_id == post.owner_id or session.is_admin %}
-    <a href="/post/delete/{{post.post_id}}"> Poista </a>
-    <a href="/post/modify/{{post.post_id}}"> Muokkaa </a>
+        <a href="/post/delete/{{post.post_id}}" class="delete"> Poista </a>
+        <a href="/post/modify/{{post.post_id}}" class="modify"> Muokkaa </a>
     {% endif %}
-    <a href="/post/{{post.post_id}}">
-    {{post.header}} <br>
-    luotu: {{post.timestamp.strftime("%Y-%m-%d %H:%M")}} <br>
-    luoja: {{post.username}} <br>
+    <a href="/post/{{post.post_id}}" class="topic_list">
+        <ul>
+            <li><h4>{{post.header}}</h4></li>
+            <li><p>{{post.content}}</p></li>
+            <li>luotu: {{post.timestamp.strftime("%Y-%m-%d %H:%M")}}</li>
+            <li>luoja: {{post.username}}</li> 
+        </ul>
     </a>
-    <p>{{post.content}}</p>
 {% endfor %}
+{% endblock %}

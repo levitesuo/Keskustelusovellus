@@ -5,18 +5,24 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}"> 
     </head>
     <body>
-        <nav class="navBar"> 
-            <ul>
-                <li><a href="/">Leddit</a></li>
-                <li><form action="/search" method="POST"> 
-                    <input type="text" name="key">
-                    <input type="submit" value="Hae">
-                </form></li>
-                <li class=".navBar"><a href="/priv_topics">Yksityispalstat</a></li>
-                <li class=".navBar"><a href="/login">Kirjaudu</a></li>
-            </ul>
-        </nav>
-        {% block content %}
-        {% endblock %}
+        <div class="content">
+            <nav class="navBar"> 
+                <ul>
+                    <li><a href="/">Leddit</a></li>
+                    <li><form action="/search" method="POST"> 
+                        <input type="text" name="key">
+                        <input type="submit" value=&#x1F50D;>   
+                    </form></li>
+                    <li><a href="/priv_topics">Yksityispalstat</a></li>
+                    {% if session.username %}
+                    <li><a href="/logout">Kirjaudu ulos</a></li>
+                    {% else %}
+                    <li><a href="/login">Kirjaudu</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% block content %}
+            {% endblock %}
+        </div>
     </body>
 </html>
