@@ -40,7 +40,7 @@ SECRET_KEY=<salainen-avain>
 ```
 ### Tietokannan alustaminen / tietokanta komennot
 Luo pöydät ja lataa teitokantaan esimerkkidataa: (__Suositeltu__)
-_Tietokannan pitää olla tyhjä.Esimerkkidata luotu komennolla "dump"_
+_Tietokannan pitää olla tyhjä. Esimerkkidata luotu komennolla "dump"_
 ```sh
 $ psql < example_data.sql
 ```
