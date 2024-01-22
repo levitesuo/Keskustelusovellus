@@ -3,6 +3,7 @@ import secrets
 from flask import session
 from db import db
 
+
 def get_topics():
     session["csrf_token"] = secrets.token_hex(16)
     sql = """   SELECT t.*, u.username, 
@@ -17,7 +18,8 @@ def get_topics():
                 ORDER BY o DESC"""
     result = db.session.execute(text(sql))
     t = result.fetchall()
-    return t    
+    return t
+
 
 def get_accessable_private_topics():
     if session["is_admin"]:
@@ -44,14 +46,17 @@ def get_accessable_private_topics():
                     WHERE pr.user_id = :user_id
                     GROUP BY t.topic_id, u.username
                     ORDER BY o DESC"""
-        result = db.session.execute(text(sql), {'user_id':session['user_id']})
+        result = db.session.execute(text(sql), {'user_id': session['user_id']})
     private_topics = result.fetchall()
     return private_topics
-    
+
+
 def create(topic):
     sql = "INSERT INTO topics (header, owner_id, timestamp) VALUES (:topic, :owner_id, NOW())"
-    db.session.execute(text(sql), {'topic':topic, 'owner_id':session["user_id"]})
+    db.session.execute(
+        text(sql), {'topic': topic, 'owner_id': session["user_id"]})
     db.session.commit()
+
 
 def create_private(topic):
     create(topic)
@@ -59,19 +64,22 @@ def create_private(topic):
     result = db.session.execute(text(sql1))
     priv_key = int(result.fetchone().m)
     sql = "UPDATE topics SET private_key = :priv_key WHERE topic_id=:priv_key"
-    db.session.execute(text(sql),{'priv_key':priv_key})
+    db.session.execute(text(sql), {'priv_key': priv_key})
     db.session.commit()
+
 
 def get_topic_by_id(id):
     sql = "SELECT * FROM topics WHERE topic_id =:id"
-    result = db.session.execute(text(sql), {'id':id})
+    result = db.session.execute(text(sql), {'id': id})
     topic = result.fetchone()
     return topic
 
+
 def delete_topic_by_id(id):
     sql = "DELETE FROM topics WHERE topic_id=:id"
-    db.session.execute(text(sql), {'id':id})
+    db.session.execute(text(sql), {'id': id})
     db.session.commit()
+
 
 def get_posts_by_search(query):
     key = "%"+query+"%"
@@ -87,7 +95,8 @@ def get_posts_by_search(query):
                     WHERE p.content LIKE :query
                     OR p.header LIKE :query
                     ORDER BY p.timestamp DESC"""
-        result = db.session.execute(text(sql),{'user_id':session["user_id"], 'query':key})   
+        result = db.session.execute(
+            text(sql), {'user_id': session["user_id"], 'query': key})
     else:
         sql = """   SELECT DISTINCT p.*, u.username, t.header AS topic_header
                     FROM posts p
@@ -97,7 +106,6 @@ def get_posts_by_search(query):
                     OR p.header LIKE :query) 
                     AND t.private_key IS NULL
                     ORDER BY p.timestamp DESC"""
-        result = db.session.execute(text(sql),{'query':key}) 
+        result = db.session.execute(text(sql), {'query': key})
     stuff = result.fetchall()
     return stuff
-    

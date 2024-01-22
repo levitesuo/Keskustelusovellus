@@ -1,9 +1,9 @@
  {% extends "navBar.html" %}
  {% block content %}
-<h2>{{p.header}}</h2>
-<p>{{p.content}}</p>
+<h2>{{content_post.header}}</h2>
+<p>{{content_post.content}}</p>
 {% if session.username %}
-    <form action="/post/{{p.post_id}}" method="POST">
+    <form action="/post/{{content_post.post_id}}" method="POST">
         Kommentoi <br>
         <div class="ta_padding"><textarea name="content" rows="4" cols="50"></textarea></div>
         <input type="submit" value="Luo">
@@ -15,7 +15,7 @@
 {% else %}
     <t class="notice">Kirjaudu sisään luokdaksesi kommentti.</t>
 {% endif %}
-{% for comment in c %}
+{% for comment in content_comments %}
     <br>
     {% if session.user_id == comment.owner_id or session.is_admin %}
     <a href="/comment/delete/{{comment.comment_id}}" class="delete"> Poista </a>
