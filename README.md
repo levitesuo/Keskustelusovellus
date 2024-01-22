@@ -42,7 +42,7 @@ SECRET_KEY=<salainen-avain>
 Luo pöydät ja lataa teitokantaan esimerkkidataa: (__Suositeltu__)
 _Tietokannan pitää olla tyhjä.Esimerkkidata luotu komennolla "dump"_
 ```sh
-$ psql < drop_all.sql
+$ psql < example_data.sql
 ```
 Luo tyhjät datapöydät tietokantaan.
 ```sh
@@ -56,3 +56,14 @@ $ psql < drop_all.sql
 ```sh
 (venv)$ flask run
 ```
+___
+
+### Valmis data tietokannassa
+Tietokannan pöytien luonnin yhteydessä sinne ladataan ylläpitäjä käyttäjä, jonka käyttäjänimi ja salasana on __admin__.
+
+Jos latasit esimerkkidatan on tietokannassa myös 3 muuta käyttäjää. Joiden salasanat ovat samat kuin käyttäjänimet.
+
+Käyttäjät
+* __Käärme__
+* __Harry__
+* __Zayn__
