@@ -16,7 +16,43 @@ Sovelluksen ominaisuuksia:
 * Ylläpitäjä voi poista ja muokata kaikkea sivun sisältöä.
 ___
 ## Käynnistysohjeet
-1. Cloonaa repositio tietokoneellesi.
-          ```sh
-            
-          ```
+Kloonaa reposition sisältö laitteelle.
+```sh
+$ git clone git@github.com:levitesuo/Keskustelusovellus.git
+```
+Liiku juurikansioon.
+```sh
+$ cd Keskustelusovellus
+```
+Aloita virtuaaliympäristö.
+```sh
+$ python3 -m venv venv
+$ source venv/bin/activate
+```
+Lataa riippuvuudet.
+```sh
+(venv)$ pip install -r requirements.txt
+```
+Luo juurikansioon .env tiedosto ja lisää sinne seuraavat tiedot.
+```sh
+DATABASE_URL=<tietokannan-paikallinen-osoite>
+SECRET_KEY=<salainen-avain>
+```
+### Tietokannan alustaminen / tietokanta komennot
+Luo pöydät ja lataa teitokantaan esimerkkidataa: (__Suositeltu__)
+_Tietokannan pitää olla tyhjä.Esimerkkidata luotu komennolla "dump"_
+```sh
+$ psql < drop_all.sql
+```
+Luo tyhjät datapöydät tietokantaan.
+```sh
+$ psql < tables.sql
+```
+Poista kaikki data tietokannasta.
+```sh
+$ psql < drop_all.sql
+```
+### Sovelluksen käynnistys
+```sh
+(venv)$ flask run
+```
