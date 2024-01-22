@@ -4,7 +4,7 @@
     <form action="/newuser" method="POST">
         <table>
             <tr>
-                <th>Anna nimesi:</th>
+                <th>Anna käyttäjänimi:</th>
                 <th><input type="text" name="username"></th>
             </tr>
             <tr>
@@ -15,10 +15,12 @@
                 <th>Anna salasana uudestaan:</th>
                 <th><input type="password" name="password2"></th>
             </tr>
-            <tr> <th></th>
-            <th><input type="submit" value="Lähetä"></th>
+            <tr> 
+                <th></th>
+                <th><input type="submit" value="Luo käyttäjä"></th>
             </tr>
         </table>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
 </div>
 {% endblock %}

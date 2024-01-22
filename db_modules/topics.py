@@ -1,8 +1,10 @@
 from sqlalchemy.sql import text
+import secrets
 from flask import session
 from db import db
 
 def get_topics():
+    session["csrf_token"] = secrets.token_hex(16)
     sql = """   SELECT t.*, u.username, 
                 COUNT(p.post_id) AS post_count,
                 MAX(p.timestamp) AS last_post,
@@ -71,9 +73,10 @@ def delete_topic_by_id(id):
     db.session.execute(text(sql), {'id':id})
     db.session.commit()
 
-def get_topics_by_search(key):
+def get_posts_by_search(query):
+    key = "%"+query+"%"
     if session.get("user_id"):
-        sql = """   SELECT DISTINCT p.*, u.username
+        sql = """   SELECT DISTINCT p.*, u.username, t.header AS topic_header
                     FROM posts p
                     JOIN users u ON p.owner_id = u.user_id
                     JOIN topics t ON p.topic_id = t.topic_id
@@ -86,7 +89,7 @@ def get_topics_by_search(key):
                     ORDER BY p.timestamp DESC"""
         result = db.session.execute(text(sql),{'user_id':session["user_id"], 'query':key})   
     else:
-        sql = """   SELECT DISTINCT p.*, u.username
+        sql = """   SELECT DISTINCT p.*, u.username, t.header AS topic_header
                     FROM posts p
                     JOIN users u ON p.owner_id = u.user_id
                     JOIN topics t ON p.topic_id = t.topic_id

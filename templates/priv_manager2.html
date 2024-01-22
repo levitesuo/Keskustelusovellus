@@ -3,6 +3,7 @@
     <form action="/addpriv/{{topic.topic_id}}" method="POST">
         <th><input type="text" name="username"></th>
         <th><input type="submit" value="Lisää"></th>
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
 </tr>
 {% for user in users %}

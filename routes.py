@@ -1,10 +1,12 @@
 from app import app
-from flask import redirect, render_template, request, session
+from flask import redirect, render_template, request, session, abort
 import db_modules.users as users
 import db_modules.topics as topics
 import db_modules.posts as posts
 import db_modules.comments as comments
 import db_modules.privrooms as privrooms
+
+
 
 @app.route("/styles.css")
 def css():
@@ -32,6 +34,8 @@ def login():
     if request.method == "GET":
         return render_template("login.html")
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         username = request.form["username"]
         password = request.form["password"]
         if not users.login(username, password):
@@ -51,6 +55,8 @@ def createAccaunt():
     if request.method == "GET":
         return render_template("newuser.html")
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
@@ -67,6 +73,8 @@ def createAccaunt():
     
 @app.route("/createTopic", methods=["POST"])
 def createTopic():
+    if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
     topic = request.form["topic"]
     topics.create(topic)
     return redirect("/")
@@ -89,6 +97,8 @@ def topic(id):
         p = posts.get_posts_by_topic(id)
         return render_template("topic.html", t = t, p = p)
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         topic_id = id
         header = request.form["header"]
         content = request.form["content"]
@@ -115,6 +125,8 @@ def modifypost(id):
     if request.method == "GET":
         return render_template("modifypost.html", post = post)
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         header = request.form["header"]
         content = request.form["content"]
         posts.modify_post_by_id(id, content, header)
@@ -128,6 +140,8 @@ def post(id):
         c = comments.get_comments_by_post(id)
         return render_template("post.html", p = p, c = c)
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         post_id = id
         content = request.form["content"]
         comments.new_comment(post_id,  content)
@@ -154,12 +168,16 @@ def modifycomment(id):
     if request.method == "GET":
         return render_template("modifycomment.html", comment = comment)
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         content = request.form["content"]
         comments.modify_comment_by_id(id, content)
         return redirect(f"/post/{comment.post_id}")
     
 @app.route("/createPrivateTopic", methods=["POST"])
 def newprivtopic():
+    if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
     topic = request.form['topic']
     topics.create_private(topic)
     return redirect("/")
@@ -176,6 +194,8 @@ def priv_room_manager(id):
     if request.method == "GET":
         return render_template("priv_manager2.html", users = u, topic = t)
     if request.method == "POST":
+        if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
         username = request.form["username"]
         private_key = request.form["private_key"]
         privrooms.addslip(username, private_key)
@@ -205,6 +225,8 @@ def del_access(user_id, topic_id):
     
 @app.route("/search", methods = ["POST"])
 def search():
+    if session["csrf_token"] != request.form["csrf_token"]:
+            abort(403)
     query = request.form["key"]
-    result = topics.get_topics_by_search(query)
-    return render_template(f"searchresult.html", content = result)
+    result = posts.get_posts_by_search(query)
+    return render_template(f"searchresult.html", content = result, query = query)

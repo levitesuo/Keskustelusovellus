@@ -12,6 +12,7 @@
                     <li><form action="/search" method="POST"> 
                         <input type="text" name="key">
                         <input type="submit" value=&#x1F50D;>   
+                        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
                     </form></li>
                     {% if session.username %}
                         <li><a href="/priv_topics">Yksityispalstat</a></li>

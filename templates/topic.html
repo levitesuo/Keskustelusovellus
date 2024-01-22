@@ -8,6 +8,7 @@
         <br><br>
         <div class="ta_padding"><textarea name="content" rows="4" cols="50"></textarea></div>
         <input type="submit" value="Luo">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
 {% else %}
     <t class="notice">Kirjaudu sisään luokdaksesi postaus.</t>

@@ -1,7 +1,9 @@
-
+{% extends "navBar.html" %}
+{% block content %}
+<br>
 <form action="/comment/{{comment.comment_id}}" method="POST">
-    <textarea name="content" rows="4" cols="50">
-        {{comment.content}}
-    </textarea>
+    <div class="ta_padding"><textarea name="content" rows="4" cols="50">{{comment.content}}</textarea></div>
     <input type="submit" value="Muokkaa">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+{% endblock %}

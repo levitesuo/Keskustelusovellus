@@ -7,6 +7,7 @@
         Uusi aihe: 
         <input type="text" name="topic">
         <input type="submit" value="Luo">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form></li>
     <li><a href="/priv_manager">Yksityspalstat &#9881;</a></li>
 </ul>

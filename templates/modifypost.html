@@ -1,9 +1,10 @@
-
+{% extends "navBar.html" %}
+{% block content %}
 <form action="/modify/{{post.post_id}}" method="POST">
-    <input type="text" name="header" value="{{post.header}}">
+    <div class="ta_padding"><input type="text" name="header" value="{{post.header}}"></div>
     <br>
-    <textarea name="content" rows="4" cols="50">
-        {{post.content}}
-    </textarea>
-    <input type="submit" value="muokkaa">
+    <div class="ta_padding"><textarea name="content" rows="4" cols="50">{{post.content}}</textarea></div>
+    <input type="submit" value="Muokkaa">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+{% endblock %}

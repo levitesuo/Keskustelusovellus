@@ -1,5 +1,6 @@
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import session
+import secrets
 from sqlalchemy.sql import text
 from db import db
 
@@ -34,6 +35,7 @@ def login(username, password):
         if check_password_hash(hash_value, password):
             session["username"] = username
             session["user_id"] = user.user_id
+            session["csrf_token"] = secrets.token_hex(16)
             if user.is_admin: 
                 session["is_admin"] = True
             else:

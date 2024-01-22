@@ -18,11 +18,11 @@ TO DO
         post contetn 0<
     Style
         OK reqister page
-        searh page
-        modify  
+        OK searh page
+        OK modify  
             comment
             post
         priv manager
             1
             2
-    Search funktion is weird
+    OK Search funktion is weird

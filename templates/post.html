@@ -7,11 +7,14 @@
         Kommentoi <br>
         <div class="ta_padding"><textarea name="content" rows="4" cols="50"></textarea></div>
         <input type="submit" value="Luo">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
+    <br>
+    Kommentit:
+    <hr class="line">
 {% else %}
     <t class="notice">Kirjaudu sisään luokdaksesi kommentti.</t>
 {% endif %}
-<br>
 {% for comment in c %}
     <br>
     {% if session.user_id == comment.owner_id or session.is_admin %}
