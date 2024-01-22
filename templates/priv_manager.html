@@ -1,11 +1,14 @@
+{% extends "navBar.html" %}
+{% block content %}
+<br>
 <form action="/createPrivateTopic" method="POST">
-    Yksityinen aihe: 
+    Luo yksityinen aihe: 
     <input type="text" name="topic">
     <input type="submit" value="Luo">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
-
-<table>
+<br>
+<table class="register">
     <tr>
         <th>Nimi</th>
         <th>Omistaja</th>
@@ -16,8 +19,9 @@
             <th>{{topic.header}}</th>
             <th>{{topic.username}}</th>
             <th>{{topic.timestamp.strftime("%Y-%m-%d %H:%M")}}</th>
-            <th><a href = "/priv_manager/{{topic.topic_id}}">Manage acces</a></th>
+            <th><a href = "/priv_manager/{{topic.topic_id}}" class="modify">Hallinnoi pääsyä</a></th>
         </tr>
 {% endfor %}
-<tr>TEST</tr>
 </table>
+
+{% endblock %}

@@ -1,7 +1,10 @@
-{{topic.header}}
+{% extends "navBar.html" %}
+{% block content %}
+<br>
+Yksityispalstan {{topic.header}} käyttäjät:
 <table> <tr>
     <form action="/addpriv/{{topic.topic_id}}" method="POST">
-        <th><input type="text" name="username"></th>
+        <th><input type="text" name="username" placeholder="Käyttäjänimi"></th>
         <th><input type="submit" value="Lisää"></th>
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
@@ -9,7 +12,8 @@
 {% for user in users %}
     <tr>
         <th>{{user.username}}</th>
-        <th><a href="/delpriv/{{user.user_id}}/{{topic.topic_id}}"> Poista </a></th>
+        <th><a href="/delpriv/{{user.user_id}}/{{topic.topic_id}}" class="delete"> Poista </a></th>
     </tr>
 {% endfor %}
 </table>
+{% endblock %}
