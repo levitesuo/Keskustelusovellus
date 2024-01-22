@@ -1,6 +1,6 @@
 {% extends "navBar.html" %}
 {% block content %}
-<form action="/modify/{{post.post_id}}" method="POST">
+<form action="/post/modify/{{post.post_id}}" method="POST">
     <div class="ta_padding"><input type="text" name="header" value="{{post.header}}"></div>
     <br>
     <div class="ta_padding"><textarea name="content" rows="4" cols="50">{{post.content}}</textarea></div>
