@@ -1,5 +1,5 @@
-from sqlalchemy.sql import text
 import secrets
+from sqlalchemy.sql import text
 from flask import session
 from db import db
 
