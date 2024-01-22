@@ -38,7 +38,10 @@ Luo juurikansioon .env tiedosto ja lisää sinne seuraavat tiedot.
 DATABASE_URL=<tietokannan-paikallinen-osoite>
 SECRET_KEY=<salainen-avain>
 ```
-### Tietokannan alustaminen / tietokanta komennot
+### Tietokanta komennot
+__Voit aloittaa sovelluksen käyttämisen tyhjältä pöydältä ja tietokannalta, tai ladata esimerkkidatan jotta sovelluksen testaaminen olisi helpompaa.__
+
+
 Luo pöydät ja lataa teitokantaan esimerkkidataa: (__Suositeltu__)
 _Tietokannan pitää olla tyhjä. Esimerkkidata luotu komennolla "dump"_
 ```sh
