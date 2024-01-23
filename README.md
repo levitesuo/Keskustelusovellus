@@ -17,56 +17,65 @@ Sovelluksen ominaisuuksia:
 ___
 ## Käynnistysohjeet
 Kloonaa reposition sisältö laitteelle.
+
 ```sh
-$ git clone git@github.com:levitesuo/Keskustelusovellus.git
+git clone git@github.com:levitesuo/Keskustelusovellus.git
 ```
+
 Liiku juurikansioon.
+
 ```sh
-$ cd Keskustelusovellus
+cd Keskustelusovellus
 ```
+
 Aloita virtuaaliympäristö.
+
 ```sh
-$ python3 -m venv venv
-$ source venv/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 ```
+
 Lataa riippuvuudet.
+
 ```sh
-(venv)$ pip install -r requirements.txt
+pip install -r requirements.txt
 ```
+
 Luo juurikansioon .env tiedosto ja lisää sinne seuraavat tiedot.
+
 ```sh
 DATABASE_URL=<tietokannan-paikallinen-osoite>
 SECRET_KEY=<salainen-avain>
 ```
-### Tietokanta komennot
-__Voit aloittaa sovelluksen käyttämisen tyhjältä pöydältä ja tietokannalta, tai ladata esimerkkidatan jotta sovelluksen testaaminen olisi helpompaa.__
 
+Käynnistä tietokanta komennolla
 
-Luo pöydät ja lataa teitokantaan esimerkkidataa: (__Suositeltu__)
-_Tietokannan pitää olla tyhjä. Esimerkkidata luotu komennolla "dump"_
 ```sh
-$ psql < example_data.sql
+start-pg.sh
 ```
-Luo tyhjät datapöydät tietokantaan.
-```sh
-$ psql < tables.sql
-```
-Poista kaikki data tietokannasta.
-```sh
-$ psql < drop_all.sql
-```
-### Sovelluksen käynnistys
-```sh
-(venv)$ flask run
-```
-___
 
-### Valmis data tietokannassa
-Tietokannan pöytien luonnin yhteydessä sinne ladataan ylläpitäjä käyttäjä, jonka käyttäjänimi ja salasana on __admin__.
+Luo itsellesi uusi database komennoilla
 
-Jos latasit esimerkkidatan on tietokannassa myös 3 muuta käyttäjää. Joiden salasanat ovat samat kuin käyttäjänimet.
+```sh
+psql
+CREATE DATABASE leevisuo
+\q
+```
 
-Käyttäjät
-* __Käärme__
-* __Harry__
-* __Zayn__
+Lataa datapöydät tietokantaan
+
+```sh
+psql < tables.sql
+```
+
+Käynnistä sovellus
+
+```sh
+flask run
+```
+
+Voit poistaa kaiken datan komennolla.
+
+```sh
+psql < drop_all.sql
+```
