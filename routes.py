@@ -29,6 +29,14 @@ def login():
             abort(403)
         username = request.form["username"]
         password = request.form["password"]
+        if len(username) > 20 or len(username) < 4:
+            return render_template("error.html",
+                                   message="Käyttäjänimen pitää olla 4-20 merkkiä pitkä.",
+                                   returnUrl="/login")
+        if len(password) > 20 or len(password) < 4:
+            return render_template("error.html",
+                                   message="Salasanan pitää olla 4-20 merkkiä pitkä.",
+                                   returnUrl="/login")
         if not users.login(username, password):
             return render_template("error.html",
                                    message="Väärä salasana tai käyttäjä",
@@ -69,6 +77,10 @@ def create_topic():
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
         new_topic = request.form["topic"]
+        if len(new_topic) > 15 or len(new_topic) < 2:
+            return render_template("error.html",
+                                   message="Palstan nimen pitää olla 2-15 merkkiä pitkä.",
+                                   returnUrl="/")
         topics.create(new_topic)
         return redirect("/")
     return redirect("/notAllowed")
@@ -99,6 +111,14 @@ def topic_page(topic_id):
                 abort(403)
             header = request.form["header"]
             content = request.form["content"]
+            if len(header) > 15 or len(header) < 2:
+                return render_template("error.html",
+                                       message="Postauksen nimen pitää olla 2-15 merkkiä pitkä.",
+                                       returnUrl=f"/topic/{topic_id}")
+            if len(content) > 0:
+                return render_template("error.html",
+                                       message="Postauksessa pitää olla tekstiä",
+                                       returnUrl=f"/topic/{topic_id}")
             posts.new_post(topic_id, header, content)
             return redirect(f"/topic/{topic_id}")
         return redirect("/notAllowed")
@@ -124,6 +144,14 @@ def modify_post(post_id):
                 abort(403)
             header = request.form["header"]
             content = request.form["content"]
+            if len(header) > 15 or len(header) < 2:
+                return render_template("error.html",
+                                       message="Postauksen nimen pitää olla 2-15 merkkiä pitkä.",
+                                       returnUrl=f"/post/modify/{post_to_be_modified.post_id}")
+            if len(content) > 0:
+                return render_template("error.html",
+                                       message="Postauksessa pitää olla tekstiä",
+                                       returnUrl=f"/post/modify/{post_to_be_modified.psot_id}")
             posts.modify_post_by_id(post_id, content, header)
             return redirect(f"/topic/{post_to_be_modified.topic_id}")
     return redirect("/notAllowed")
@@ -142,6 +170,10 @@ def post_page(post_id):
             if session["csrf_token"] != request.form["csrf_token"]:
                 abort(403)
             content = request.form["content"]
+            if len(content) > 0:
+                return render_template("error.html",
+                                       message="Kommentti ei voi olla tyhjä.",
+                                       returnUrl=f"/post/{post_id}")
             comments.new_comment(post_id,  content)
             return redirect(f"/post/{post_id}")
         return redirect("/notAllowed")
@@ -166,6 +198,10 @@ def modify_comment(comt_id):
             if session["csrf_token"] != request.form["csrf_token"]:
                 abort(403)
             content = request.form["content"]
+            if len(content) > 0:
+                return render_template("error.html",
+                                       message="Kommentti ei voi olla tyhjä.",
+                                       returnUrl=f"/post/{comt_to_be_mod.comment_id}")
             comments.modify_comment_by_id(comt_id, content)
             return redirect(f"/post/{comt_to_be_mod.post_id}")
     return redirect("/notAllowed")
@@ -177,6 +213,10 @@ def new_priv_topic():
         if session["csrf_token"] != request.form["csrf_token"]:
             abort(403)
         new_topic = request.form['topic']
+        if len(new_topic) > 15 or len(new_topic) < 2:
+            return render_template("error.html",
+                                   message="Palstan nimen pitää olla 2-15 merkkiä pitkä.",
+                                   returnUrl="/priv_manager")
         topics.create_private(new_topic)
         return redirect("/")
     return redirect("/notAllowed")
