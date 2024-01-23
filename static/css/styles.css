@@ -13,6 +13,10 @@ body {
     background-attachment: fixed;
     -webkit-backdrop-filter:blur(15px);
     backdrop-filter: blur(15px);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .content {

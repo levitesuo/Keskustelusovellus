@@ -29,14 +29,6 @@ def login():
             abort(403)
         username = request.form["username"]
         password = request.form["password"]
-        if len(username) > 20 or len(username) < 4:
-            return render_template("error.html",
-                                   message="Käyttäjänimen pitää olla 4-20 merkkiä pitkä.",
-                                   returnUrl="/login")
-        if len(password) > 20 or len(password) < 4:
-            return render_template("error.html",
-                                   message="Salasanan pitää olla 4-20 merkkiä pitkä.",
-                                   returnUrl="/login")
         if not users.login(username, password):
             return render_template("error.html",
                                    message="Väärä salasana tai käyttäjä",
@@ -60,6 +52,14 @@ def create_account():
         username = request.form["username"]
         password1 = request.form["password1"]
         password2 = request.form["password2"]
+        if len(username) > 20 or len(username) < 4:
+            return render_template("error.html",
+                                   message="Käyttäjänimen pitää olla 4-20 merkkiä pitkä.",
+                                   returnUrl="/newuser")
+        if len(password1) > 20 or len(password1) < 4:
+            return render_template("error.html",
+                                   message="Salasanan pitää olla 4-20 merkkiä pitkä.",
+                                   returnUrl="/newuser")
         if password1 != password2:
             return render_template("error.html",
                                    message="Salasanat eroavat",
@@ -115,7 +115,7 @@ def topic_page(topic_id):
                 return render_template("error.html",
                                        message="Postauksen nimen pitää olla 2-15 merkkiä pitkä.",
                                        returnUrl=f"/topic/{topic_id}")
-            if len(content) > 0:
+            if len(content) == 0:
                 return render_template("error.html",
                                        message="Postauksessa pitää olla tekstiä",
                                        returnUrl=f"/topic/{topic_id}")
@@ -148,7 +148,7 @@ def modify_post(post_id):
                 return render_template("error.html",
                                        message="Postauksen nimen pitää olla 2-15 merkkiä pitkä.",
                                        returnUrl=f"/post/modify/{post_to_be_modified.post_id}")
-            if len(content) > 0:
+            if len(content) == 0:
                 return render_template("error.html",
                                        message="Postauksessa pitää olla tekstiä",
                                        returnUrl=f"/post/modify/{post_to_be_modified.psot_id}")
@@ -170,7 +170,7 @@ def post_page(post_id):
             if session["csrf_token"] != request.form["csrf_token"]:
                 abort(403)
             content = request.form["content"]
-            if len(content) > 0:
+            if len(content) == 0:
                 return render_template("error.html",
                                        message="Kommentti ei voi olla tyhjä.",
                                        returnUrl=f"/post/{post_id}")
@@ -198,7 +198,7 @@ def modify_comment(comt_id):
             if session["csrf_token"] != request.form["csrf_token"]:
                 abort(403)
             content = request.form["content"]
-            if len(content) > 0:
+            if len(content) == 0:
                 return render_template("error.html",
                                        message="Kommentti ei voi olla tyhjä.",
                                        returnUrl=f"/post/{comt_to_be_mod.comment_id}")
