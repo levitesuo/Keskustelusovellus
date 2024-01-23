@@ -11,8 +11,6 @@ body {
     background-image: url("/static/img/background.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
-    -webkit-backdrop-filter:blur(15px);
-    backdrop-filter: blur(15px);
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -21,16 +19,22 @@ body {
 
 .content {
     max-width: 960px;
+    min-height: 720px;
     margin: auto;
     background: rgba(63, 63, 94, 0.1);
-    padding: 10px;
+    padding: 15px;
     border-radius: 0px 0px 30px 30px;
+    -webkit-backdrop-filter:blur(15px);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 }
 
 nav {
     padding: 1rem 1rem;
     background: rgba(0,0,0,0.3);
     font-size: small;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 nav ul {  
@@ -81,6 +85,7 @@ input[type=submit]:hover {
     padding: 1rem 1rem;
     background-color: rgba(0,0,0,0.1);
     color: black;
+    box-shadow: 0 6px 15px 0 rgba(0, 0, 0, 0.2), 0 6px 15px 0 rgba(0, 0, 0, 0.19);
 }
 
 .at {
@@ -96,10 +101,12 @@ input[type=submit]:hover {
     display: flex;
     flex-direction: column;
     list-style: none;
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .topic_list ul:hover{
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0,0,0,0.2);
 }
 
 .line {
